@@ -1,0 +1,103 @@
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+		/*Here, I set the string into an array so that I could read the instructions of 
+		the input and call the subsequent methods below to return the altered string.*/
+
+        while (sc.hasNextLine()) {
+            List<String> arr = new ArrayList<String>(List.of(sc.nextLine().split(";")));
+            String type = arr.get(1);
+            String word = arr.get(2);
+            int n = word.length();
+            if (arr.get(0).equals("S")) {
+                split(n, type, word, arr);
+            } else if (arr.get(0).equals("C")) {
+                combine(n, type, word, arr);
+            }
+        }
+    }
+
+	/*Below, I created two distinct methods for splitting and combining. Each one reads
+	the instructions of the input and adjusts the string as needed. I wrote this a while
+	ago, and if I were to recode it, I would likely try using StringBuilder to concatenate
+	these characters instead of instantiating a list; it would make for more efficient and
+	readable code. I'll rework this at a later date within this file.*/
+
+    public static void split(Integer n, String type, String word, List<String> arr) {
+        List<String> wordtwo = new ArrayList<>();
+        if (type.equals("M")) {
+            for (int i = 0; i < n - 2; i++) {
+                char currentChar = word.charAt(i);
+                if (Character.isUpperCase(currentChar)) {
+                    wordtwo.add(Character.toString(' '));
+                    wordtwo.add(Character.toString(word.charAt(i)).toLowerCase());
+                } else {
+                    wordtwo.add(Character.toString(word.charAt(i)));
+                }
+            }
+            System.out.println(String.join("", wordtwo));
+            
+        } else if (type.equals("V") || type.equals("C")) {
+            wordtwo.add(Character.toString(word.charAt(0)).toLowerCase());
+            for (int i = 1; i < n; i++) {
+                char currentChar = word.charAt(i);
+                if (Character.isUpperCase(currentChar)) {
+                    wordtwo.add(Character.toString(' '));
+                    wordtwo.add(Character.toString(word.charAt(i)).toLowerCase());
+                } else {
+                    wordtwo.add(Character.toString(word.charAt(i)));
+                }
+            }
+            System.out.println(String.join("", wordtwo));
+        } else {
+            System.out.println("INVALID.");
+        }
+    }
+
+    public static void combine(Integer n, String type, String word, List<String> arr) {
+        List<String> wordtwo = new ArrayList<>();
+        if (type.equals("M")) {
+                for (int i = 0; i < n; i++) {
+                    char currentChar = word.charAt(i);
+                    if (currentChar == ' ') {
+                    wordtwo.add(Character.toString(word.charAt(i + 1)).toUpperCase());
+                    i++;
+                } else {
+                    wordtwo.add(Character.toString(word.charAt(i)));
+                }
+            }
+            System.out.println(String.join("", wordtwo) + "()");
+        } else if (type.equals("V")) {
+            for (int i = 0; i < n; i++) {
+                    char currentChar = word.charAt(i);
+                    if (currentChar == ' ') {
+                    wordtwo.add(Character.toString(word.charAt(i + 1)).toUpperCase());
+                    i++;
+                } else {
+                    wordtwo.add(Character.toString(word.charAt(i)));
+                }
+            }
+            System.out.println(String.join("", wordtwo));
+        } else if (type.equals("C")) {
+            wordtwo.add(Character.toString(word.charAt(0)).toUpperCase());
+            for (int i = 1; i < n; i++) {
+                    char currentChar = word.charAt(i);
+                    if (currentChar == ' ') {
+                    wordtwo.add(Character.toString(word.charAt(i + 1)).toUpperCase());
+                    i++;
+                } else {
+                    wordtwo.add(Character.toString(word.charAt(i)));
+                }
+            }
+            System.out.println(String.join("", wordtwo));
+        } else {
+            System.out.println("INVALID.");
+        }
+    }
+}
